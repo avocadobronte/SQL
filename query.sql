@@ -1,4 +1,4 @@
---- Data Analysis
+--- DATA ANALYSIS
 --1. List the following details of each employee: employee number, last name, first name, gender, and salary.
 SELECT employees.emp_no AS "Employee Number", first_name AS "First Name", last_name AS "Last Name", gender, salary
 FROM employees JOIN salaries
@@ -22,31 +22,14 @@ FROM employees
 WHERE first_name = 'Hercules' AND last_name LIKE 'B%';
 --6. List all employees in the Sales department, including their employee number, last name, first name, and department name.
 SELECT  e.emp_no AS "Employee Number", e.last_name AS "Last Name", e.first_name AS "First Name", d.deot_name AS "Department Name"
-FROM employees e, dept_emp de, (SELECT *
-								FROM departments
-							    WHERE deot_name = 'Sales') d
+FROM employees e, dept_emp de, (SELECT *FROM departments WHERE deot_name = 'Sales') d
 WHERE d.dept_no = de.dept_no AND de.emp_no = e.emp_no;
 --7. List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
 SELECT  e.emp_no AS "Employee Number", e.last_name AS "Last Name", e.first_name AS "First Name", d.deot_name AS "Department Name"
-FROM employees e, dept_emp de, (SELECT *
-								FROM departments
-							    WHERE deot_name IN ('Sales', 'Development')) d
+FROM employees e, dept_emp de, (SELECT * FROM departments WHERE deot_name IN ('Sales', 'Development')) d
 WHERE d.dept_no = de.dept_no AND de.emp_no = e.emp_no;
 --8. In descending order, list the frequency count of employee last names, i.e., how many employees share each last name.
 SELECT last_name AS "Last Name", count(last_name) AS "Count"
 FROM employees
 GROUP BY last_name
 ORDER BY "Count" DESC;
--- Bonus (Optional)
-
---As you examine the data, you are overcome with a creeping suspicion that the dataset is fake. 
---You surmise that your boss handed you spurious data in order to test the data engineering skills of a new employee. 
---To confirm your hunch, you decide to take the following steps to generate a visualization of the data, with which you will confront your boss:
-
---1. Import the SQL database into Pandas. (Yes, you could read the CSVs directly in Pandas, but you are, after all, trying to prove your technical mettle.) This step may require some research. Feel free to use the code below to get started. Be sure to make any necessary modifications for your username, password, host, port, and database name:
-
---   ```sql
---   from sqlalchemy import create_engine
---   engine = create_engine('postgresql://localhost:5432/<your_db_name>')
---   connection = engine.connect()
---   ```
